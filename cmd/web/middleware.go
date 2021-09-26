@@ -1,17 +1,18 @@
 package main
 
-import (
-	"github.com/go-chi/chi"
-	"net/http"
-)
-
-func routes() http.Handler{
-	mux := chi.NewRouter()
-	
-	mux.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Welcome to Tonic Massage"))
-	})
-	
-	
-	return mux
-}
+//
+//import (
+//	"github.com/go-chi/chi"
+//	"net/http"
+//)
+//
+//func routes() http.Handler{
+//	mux := chi.NewRouter()
+//
+//	mux.Get("/", func(w http.ResponseWriter, r *http.Request) {
+//		w.Write([]byte("Welcome to Tonic Massage"))
+//	})
+//
+//
+//	return mux
+//}
