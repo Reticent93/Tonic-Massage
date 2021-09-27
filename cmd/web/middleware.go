@@ -1,18 +1,23 @@
 package main
 
-//
-//import (
-//	"github.com/go-chi/chi"
-//	"net/http"
-//)
-//
-//func routes() http.Handler{
-//	mux := chi.NewRouter()
-//
-//	mux.Get("/", func(w http.ResponseWriter, r *http.Request) {
-//		w.Write([]byte("Welcome to Tonic Massage"))
-//	})
-//
-//
-//	return mux
-//}
+import (
+	"github.com/justinas/nosurf"
+	"net/http"
+)
+
+//NOSurf adds CSRF protection to all POST requests
+func NoSurf(next http.Handler) http.Handler {
+	CsrfHandler := nosurf.New(next)
+
+	CsrfHandler.SetBaseCookie(http.Cookie{
+		HttpOnly: true,
+		Path:     "/",
+		Secure:   app.InProduction,
+		SameSite: http.SameSiteLaxMode,
+	})
+	return CsrfHandler
+}
+
+func SessionLoad(next http.Handler) http.Handler {
+	return session.LoadAndSave(next)
+}
