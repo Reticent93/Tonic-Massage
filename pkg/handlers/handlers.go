@@ -37,9 +37,24 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
-
 }
 
 func (m *Repository) Massage(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "therapists.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Lymphatic(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "lymphatic.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Swedish(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "swedish.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) DeepTissue(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "deep-tissue.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{})
 }
