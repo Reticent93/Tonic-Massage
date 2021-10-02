@@ -56,5 +56,5 @@ func (m *Repository) DeepTissue(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "search.avail.page.tmpl", &models.TemplateData{})
 }

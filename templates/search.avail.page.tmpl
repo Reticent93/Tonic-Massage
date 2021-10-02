@@ -1,0 +1,70 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h1 class="mt-3">Search for Availability</h1>
+
+
+                <form action="/booking" method="get" novalidate class="needs-validation">
+                    <input type="hidden">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col" id="reservation-dates" data-date="01/25/2020">
+                                    <input required type="text" autocomplete="off" class="form-control" name="date"
+                                           placeholder="Booking Date">
+                                </div>
+                                <div class="col">
+                                    <input required type="time" autocomplete="off" class="form-control" name="time"
+                                           placeholder="Time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <button type="submit" class="btn btn-primary">Search Availability</button>
+                </form>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p id="myParagraph">This is some text</p>
+            </div>
+        </div>
+
+    </div>
+
+{{end}}
+
+{{define "js"}}
+
+    <script>
+        const elem = document.querySelector('input[name="date"]');
+        const datepicker = new Datepicker(elem, {
+            // ...options
+        });
+
+
+    </script>
+
+{{end}}
+
+
+I love mud!
+Mud! Mud! Mud!
+Ishy, gishy, super squishy,
+Mud! Mud! Mud!
+Mud on my boots, mud on my hat,
+Mud on my dog, mud on my cat.
+Mud at the playground under the swings,
+I think mud is a beautiful thing.
+I love to squish it! I love to squash it!
+I don't know why we have to wash it.
