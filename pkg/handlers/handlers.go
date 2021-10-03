@@ -58,3 +58,15 @@ func (m *Repository) DeepTissue(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "search.avail.page.tmpl", &models.TemplateData{})
 }
+
+func (m *Repository) Andrea(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "andrea.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Italo(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "italo.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Elle(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "elle.page.tmpl", &models.TemplateData{})
+}

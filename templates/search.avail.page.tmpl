@@ -13,13 +13,18 @@
                     <div class="form-row">
                         <div class="col">
                             <div class="row">
+
+                                <div class="col">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Select a therapist</option>
+                                        <option value="1">Andrea Johnson</option>
+                                        <option value="2">Italo Zafron</option>
+                                        <option value="3">Elle McAllister</option>
+                                    </select>
+                                </div>
                                 <div class="col" id="reservation-dates" data-date="01/25/2020">
                                     <input required type="text" autocomplete="off" class="form-control" name="date"
                                            placeholder="Booking Date">
-                                </div>
-                                <div class="col">
-                                    <input required type="time" autocomplete="off" class="form-control" name="time"
-                                           placeholder="Time">
                                 </div>
                             </div>
                         </div>
@@ -49,22 +54,10 @@
     <script>
         const elem = document.querySelector('input[name="date"]');
         const datepicker = new Datepicker(elem, {
-            // ...options
+
         });
 
 
     </script>
 
 {{end}}
-
-
-I love mud!
-Mud! Mud! Mud!
-Ishy, gishy, super squishy,
-Mud! Mud! Mud!
-Mud on my boots, mud on my hat,
-Mud on my dog, mud on my cat.
-Mud at the playground under the swings,
-I think mud is a beautiful thing.
-I love to squish it! I love to squash it!
-I don't know why we have to wash it.
