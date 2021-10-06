@@ -16,9 +16,33 @@
         <div class="row">
             <div class="col text-center">
 
-                <a href="/booking" class="btn btn-success">Book A Massage</a>
+                <a id="check-availability-button" href="/booking" class="btn btn-success">Book A Massage</a>
             </div>
         </div>
     </div>
+
+{{end}}
+{{define "js"}}
+    <script>
+        document.getElementById("check-availability-button").addEventListener("click", function () {
+            let html = `
+            <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-row" id="booking-date-modal">
+                            <div class="col">
+                                <input required  type="text" class="form-control" name="start" id="start" placeholder="Date of Appointment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            `;
+            attention.dropCustom({msg: html, title: "Choose your date"})
+        })
+
+    </script>
+
 
 {{end}}

@@ -2,24 +2,103 @@
 
 {{define "content"}}
     <div class="container">
-        <div class="row">
+        <div class="row text-center">
             <div class="col">
-                <a href="/massage-therapists/andrea">
-                <img src="/static/images/andrea-therapist.jpg" alt="andrea the therapist" class="img-fluid img-thumbnail mx-auto d-block" >
-                </a>
+
+                <img src="/static/images/andrea-therapist.jpg" alt="andrea the therapist"
+                     class="img-fluid img-thumbnail mx-auto d-block">
+
+                <h2>Andrea Johnson</h2>
+                <p>Andrea Johnson specializes in Swedish Massage makes you feel good. It is heavy pressure in targeted
+                    areas.Deep Tissue Massage
+                    makes you feel good. It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good.
+                    It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure
+                    in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure in targeted
+                    areas.</p>
             </div>
             <div class="col">
-                <a href="/massage-therapists/italo">
-                <img src="/static/images/italo-therapist.jpg" alt="andrea the therapist" class="img-fluid img-thumbnail mx-auto d-block" >
-                </a>
+
+                <img src="/static/images/italo-therapist.jpg" alt="andrea the therapist"
+                     class="img-fluid img-thumbnail mx-auto d-block">
+
+                <h2>Italo Zafron</h2>
+                <p>Italo Zafron specializes in Lymphatic Tissue Massage makes you feel good. It is heavy pressure in
+                    targeted areas.Deep Tissue Massage
+                    makes you feel good. It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good.
+                    It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure
+                    in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure in targeted
+                    areas.</p>
             </div>
             <div class="col">
-                <a href="/massage-therapists/elle">
-                <img src="/static/images/vinicus-therapist.jpg" alt="andrea the therapist" class="img-fluid img-thumbnail mx-auto d-block" >
-                </a>
+
+                <img src="/static/images/vinicus-therapist.jpg" alt="andrea the therapist"
+                     class="img-fluid img-thumbnail mx-auto d-block">
+
+                <h2>Elle McAllister</h2>
+                <p>Elle McAllister specializes in Deep Tissue Massage makes you feel good. It is heavy pressure in
+                    targeted areas.Deep Tissue Massage
+                    makes you feel good. It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good.
+                    It is heavy pressure in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure
+                    in targeted areas.Deep Tissue Massage makes you feel good. It is heavy pressure in targeted
+                    areas.</p>
             </div>
         </div>
+        <div class="col text-center">
+            <a id="check-availability-button" href="#!" class="btn btn-success">Book A Massage</a>
+        </div>
     </div>
+{{end}}
 
+{{define "js"}}
+    <script>
+        document.getElementById("check-availability-button").addEventListener("click", function () {
+            // let html = `
+            // <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
+            //     <div class="form-row">
+            //         <div class="col-md-6">
+            //             <div class="form-row" id="booking-date-modal"></div>
+            //                 <div class="col">
+            //                     <select class="form-select" id="start" aria-label="">
+            //                         <option selected>Select a therapist</option>
+            //                         <option value="1">Andrea Johnson</option>
+            //                         <option value="2">Italo Zafron</option>
+            //                         <option value="3">Elle McAllister</option>
+            //                     </select>
+            //                 </div>
+            //                     <div class="col">
+            //                         <input required  type="text" class="form-control" name="date" id="end" placeholder="Date of Appointment">
+            //                     </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            // </form>
+            //
+            // `
+
+            let html = `
+                <form id="check-availability-form" action="" method="post"  novalidate class="needs-validation">
+                    <div class="form-row">
+                        <div class="col text-center">
+                            <div class="row" id="reservation-dates-modal">
+                                <div class="col-6">
+                                    <select disabled required type="text" class="form-select mb-3" aria-label=".form-select-lg" name="start"  id="start" placeholder="Arrival">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Andrea Johnson</option>
+                                        <option value="2">Italo Zafron</option>
+                                        <option value="3">Elle McAllister</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <input disabled autocomplete="off" required type="text" class="start form-control" name="end" id="end" placeholder="Departure">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+    `;
+            attention.dropCustom({msg: html, title: "Choose A Therapist and Date"})
+        })
+    </script>
 
 {{end}}
+
