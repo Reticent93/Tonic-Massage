@@ -95,14 +95,27 @@
 
     {{end}}
     <script>
-        let attention = Prompt()
+        let attention = Prompt();
 
 
 
-        // const elem = document.getElementsByClassName('date');
-        // const datepicker = new Datepicker(elem, {
-        //     format: "yyyy-mm-dd"
-        // });
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                let forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
 
 
         function notify(msg, msgType) {
@@ -188,16 +201,12 @@
                     focusConfirm: false,
                     showCancelButton: true,
                     willOpen: () => {
-                        // const elem = document.getElementById('reservation-dates')
-                        // const dp = new Datepicker(elem, {
-                        //     format: 'yyyy-mm-dd',
-                        //     showOnFocus: true,
-                        // })
-                        const elem = document.getElementById('#flatpicker')
+                        const elem = document.getElementById('flatpicker')
                         const dp = flatpickr(elem, {
                             altInput: true,
                             altFormat: "F j, Y",
                             dateFormat: "d-m-Y",
+                            allowInput: true
                         })
 
 
@@ -208,11 +217,6 @@
                             document.getElementById('flatpicker').value,
 
                         ]
-                    },
-                    didOpen: () => {
-                        if (c.didOpen !== undefined) {
-                            c.didOpen()
-                        }
                     },
 
                 })
@@ -234,34 +238,30 @@
                     title: title,
                     html: msg,
                     backdrop: true,
-                    focusConfirm: true,
+                    focusConfirm: false,
                     showCancelButton: true,
                     willOpen: () => {
-                      const elem = document.querySelector('input[name="booking-date"]')
-                        const dp = new flatpickr(elem, {
-
+                      const elem = document.querySelector("input[name='booking-date']")
+                        const fp = new flatpickr(elem, {
+                            altInput: true,
+                            altFormat: "F j, Y",
+                            dateFormat: "Y-m-d",
+                            allowInput: true,
+                            minDate: "today"
                         })
                     },
 
                     preConfirm: () => {
                         return [
-                            // document.getElementById('reservation-dates').value,
-                            document.querySelector("start"),
-
+                            document.getElementById('start').value,
+                            document.getElementById('book-date').value,
                         ]
-                    },
-                    didOpen: () => {
-                        document.querySelector('input[name="booking-date"]').removeAttribute('disabled')
-                        // document.getElementById('end').removeAttribute('disabled')
-
                     },
 
                 })
-
                 if (formValues) {
                     Swal.fire(JSON.stringify(formValues))
                 }
-
             }
 
             // async function dropCustom(c) {

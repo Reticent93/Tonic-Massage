@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
+	"github.com/justinas/nosurf"
 	"html/template"
 	"log"
 	"net/http"
@@ -20,7 +21,8 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultdata(td *models.TemplateData) *models.TemplateData {
+func AddDefaultdata(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
@@ -43,7 +45,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	buf := new(bytes.Buffer)
 
-	td = AddDefaultdata(td)
+	td = AddDefaultdata(td, r)
 
 	_ = t.Execute(buf, td)
 

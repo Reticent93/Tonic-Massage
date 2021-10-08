@@ -51,47 +51,32 @@
 
 {{define "js"}}
     <script>
-    //     document.getElementById("check-availability-button").addEventListener("click", function () {
-    //         let html = `
-    //             <form id="check-availability-form" action="" method=""  novalidate class="needs-validation">
-    //                 <div class="form-row">
-    //
-    //                         <div class="form-row" id="reservation-dates-modal">
-    //                             <div class="col">
-    //                                 <select required type="text" class="form-select mb-3" aria-label=".form-select-lg" name="start"  id="start" placeholder="Arrival">
-    //                                     <option selected>Open this select menu</option>
-    //                                     <option value="1">Andrea Johnson</option>
-    //                                     <option value="2">Italo Zafron</option>
-    //                                     <option value="3">Elle McAllister</option>
-    //                                 </select>
-    //                             </div>
-    //                             <div class="col">
-    //                                 <input autocomplete="off" required type="text" class="form-control" name="booking-date" placeholder="Book Date">
-    //                             </div>
-    //                         </div>
-    //
-    //                 </div>
-    //             </form>
-    // `;
-    //         attention.dropCustom({msg: html, title: "Choose A Therapist and Booking Date"})
-    //     })
-    document.getElementById("check-availability-button").addEventListener("click", function () {
-        let html = `
-        <div class="form-row">
-            <div class="col">
-                <div class="form-row" id="reservation-dates-modal">
-                    <input class="form-control" type="text" name="start">
-                <div class="col">
-                    <input class="form-control" type="text" name="end">
-                </div>
-                </div>
-            </div>
-        </div>
+        document.getElementById("check-availability-button").addEventListener("click", function () {
+            let html = `
+                <form id="check-availability-form" action="" method="get"  novalidate class="needs-validation">
+                    <div class="form-row md-6">
 
-        `;
-        attention.dropCustom({msg: html, title: "Choose A Therapist and Booking Date"})
+                            <div class="form-row" id="reservation-dates-modal">
+                                <div class="col">
+                                    <select type="text" class="form-select mb-3" aria-label=".form-select-lg" name="start"  id="start" placeholder="Arrival">
+                                        <option selected>Select A Therapist</option>
+                                        <option>Andrea Johnson</option>
+                                        <option>Italo Zafron</option>
+                                        <option>Elle McAllister</option>
+                                    </select>
+                                </div>
+                                    <div>
+                                <div class="col">
+                                    <input autocomplete="off" id="book-date" required type="text" class="form-control" name="booking-date" placeholder="Book Date">
+                                </div>
+</div>
+                            </div>
 
-    })
+                    </div>
+                </form>
+    `;
+            attention.dropCustom({msg: html, title: "Choose A Therapist and Date"})
+        })
 
 
     </script>

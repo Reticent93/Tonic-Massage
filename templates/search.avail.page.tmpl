@@ -6,21 +6,21 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <h1 class="mt-3">Search for Availability</h1>
-                <form action="/search-availability" method="get" novalidate class="needs-validation">
-                    <input type="hidden">
+                <form action="/search-availability" method="post" novalidate class="needs-validation">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="form-row">
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" name="therapist" aria-label="Default select example">
                                         <option selected>Select a therapist</option>
-                                        <option value="1">Andrea Johnson</option>
-                                        <option value="2">Italo Zafron</option>
-                                        <option value="3">Elle McAllister</option>
+                                        <option>Andrea Johnson</option>
+                                        <option>Italo Zafron</option>
+                                        <option>Elle McAllister</option>
                                     </select>
                                 </div>
-                                <div class="col" id="flatpicker" data-date="01/25/2020">
-                                    <input required type="text" autocomplete="off" class="form-control" name="book-date"
+                                <div class="col"  data-date="01/25/2020">
+                                    <input required type="text" autocomplete="off" class="flatpicker form-control" name="book-date"
                                            placeholder="Booking Date">
                                 </div>
                             </div>
@@ -39,9 +39,12 @@
 
 {{define "js"}}
     <script>
-        const elem = document.getElementById('flatpicker');
+        const elem = document.getElementsByClassName('flatpicker');
         const fp = flatpickr(elem, {
-
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "d-m-Y",
+            allowInput: true,
         });
     </script>
 

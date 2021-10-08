@@ -1,9 +1,12 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
 	"github.com/Reticent93/Tonic-Massage/pkg/render"
+	"log"
 	"net/http"
 )
 
@@ -57,6 +60,34 @@ func (m *Repository) DeepTissue(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "search.avail.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
+	therapist := r.Form.Get("therapist")
+	book_date := r.Form.Get("book-date")
+
+	w.Write([]byte(fmt.Sprintf("therapist is %s and book-date is %s", therapist, book_date)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+//AvailabilityJSON handles request for availability and send JSON response
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
