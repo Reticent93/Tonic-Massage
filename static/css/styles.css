@@ -32,6 +32,10 @@
     box-shadow: none;
 }
 
-.datepicker {
+.datepicker-dropdown {
     z-index: 10000;
+}
+
+.datepicker-picker {
+    z-index: 100000;
 }

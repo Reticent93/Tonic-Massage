@@ -12,6 +12,8 @@
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
 
         <title>Tonic Massage</title>
@@ -83,9 +85,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
     <script src="https://unpkg.com/notie"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
     {{block "js" .}}
 
@@ -184,23 +188,31 @@
                     focusConfirm: false,
                     showCancelButton: true,
                     willOpen: () => {
-                        const elem = document.getElementById('booking-dates-modal')
-                        const dp = new DatePicker(elem, {
-                            format: 'yyyy-mm-dd',
-                            showOnFocus: true,
+                        // const elem = document.getElementById('reservation-dates')
+                        // const dp = new Datepicker(elem, {
+                        //     format: 'yyyy-mm-dd',
+                        //     showOnFocus: true,
+                        // })
+                        const elem = document.getElementById('#flatpicker')
+                        const dp = flatpickr(elem, {
+                            altInput: true,
+                            altFormat: "F j, Y",
+                            dateFormat: "d-m-Y",
                         })
+
+
+                    },
+
+                    preConfirm: () => {
+                        return [
+                            document.getElementById('flatpicker').value,
+
+                        ]
                     },
                     didOpen: () => {
                         if (c.didOpen !== undefined) {
                             c.didOpen()
                         }
-                    },
-                    preConfirm: () => {
-                        return [
-                            document.getElementById('start').value,
-                            document.getElementById('end').value,
-
-                        ]
                     },
 
                 })
@@ -225,22 +237,22 @@
                     focusConfirm: true,
                     showCancelButton: true,
                     willOpen: () => {
-                      const elem = document.getElementById('end')
-                        const dp = new Datepicker(elem, {
-                            showOnFocus: true
+                      const elem = document.querySelector('input[name="booking-date"]')
+                        const dp = new flatpickr(elem, {
+
                         })
                     },
 
                     preConfirm: () => {
                         return [
-                            document.getElementById('start').value,
-                            document.getElementById('end').value,
+                            // document.getElementById('reservation-dates').value,
+                            document.querySelector("start"),
 
                         ]
                     },
                     didOpen: () => {
-                        document.getElementById('start').removeAttribute('disabled'),
-                        document.getElementById('end').removeAttribute('disabled')
+                        document.querySelector('input[name="booking-date"]').removeAttribute('disabled')
+                        // document.getElementById('end').removeAttribute('disabled')
 
                     },
 
@@ -279,7 +291,7 @@
                 toast: toast,
                 success: success,
                 error: error,
-                custom: custom,
+                // custom: custom,
                 dropCustom: dropCustom,
             }
         }

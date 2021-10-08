@@ -19,8 +19,8 @@
                                         <option value="3">Elle McAllister</option>
                                     </select>
                                 </div>
-                                <div class="col" id="reservation-dates" data-date="01/25/2020">
-                                    <input required type="text" autocomplete="off" class="form-control" name="date"
+                                <div class="col" id="flatpicker" data-date="01/25/2020">
+                                    <input required type="text" autocomplete="off" class="form-control" name="book-date"
                                            placeholder="Booking Date">
                                 </div>
                             </div>
@@ -39,9 +39,9 @@
 
 {{define "js"}}
     <script>
-        const elem = document.querySelector('input[name="date"]');
-        const dp = new Datepicker(elem, {
-            format: "yyyy-mm-dd"
+        const elem = document.getElementById('flatpicker');
+        const fp = flatpickr(elem, {
+
         });
     </script>
 

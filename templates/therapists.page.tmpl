@@ -51,53 +51,49 @@
 
 {{define "js"}}
     <script>
-        document.getElementById("check-availability-button").addEventListener("click", function () {
-            // let html = `
-            // <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
-            //     <div class="form-row">
-            //         <div class="col-md-6">
-            //             <div class="form-row" id="booking-date-modal"></div>
-            //                 <div class="col">
-            //                     <select class="form-select" id="start" aria-label="">
-            //                         <option selected>Select a therapist</option>
-            //                         <option value="1">Andrea Johnson</option>
-            //                         <option value="2">Italo Zafron</option>
-            //                         <option value="3">Elle McAllister</option>
-            //                     </select>
-            //                 </div>
-            //                     <div class="col">
-            //                         <input required  type="text" class="form-control" name="date" id="end" placeholder="Date of Appointment">
-            //                     </div>
-            //             </div>
-            //         </div>
-            //     </div>
-            // </form>
-            //
-            // `
+    //     document.getElementById("check-availability-button").addEventListener("click", function () {
+    //         let html = `
+    //             <form id="check-availability-form" action="" method=""  novalidate class="needs-validation">
+    //                 <div class="form-row">
+    //
+    //                         <div class="form-row" id="reservation-dates-modal">
+    //                             <div class="col">
+    //                                 <select required type="text" class="form-select mb-3" aria-label=".form-select-lg" name="start"  id="start" placeholder="Arrival">
+    //                                     <option selected>Open this select menu</option>
+    //                                     <option value="1">Andrea Johnson</option>
+    //                                     <option value="2">Italo Zafron</option>
+    //                                     <option value="3">Elle McAllister</option>
+    //                                 </select>
+    //                             </div>
+    //                             <div class="col">
+    //                                 <input autocomplete="off" required type="text" class="form-control" name="booking-date" placeholder="Book Date">
+    //                             </div>
+    //                         </div>
+    //
+    //                 </div>
+    //             </form>
+    // `;
+    //         attention.dropCustom({msg: html, title: "Choose A Therapist and Booking Date"})
+    //     })
+    document.getElementById("check-availability-button").addEventListener("click", function () {
+        let html = `
+        <div class="form-row">
+            <div class="col">
+                <div class="form-row" id="reservation-dates-modal">
+                    <input class="form-control" type="text" name="start">
+                <div class="col">
+                    <input class="form-control" type="text" name="end">
+                </div>
+                </div>
+            </div>
+        </div>
 
-            let html = `
-                <form id="check-availability-form" action="" method="post"  novalidate class="needs-validation">
-                    <div class="form-row">
-                        <div class="col text-center">
-                            <div class="row" id="reservation-dates-modal">
-                                <div class="col-6">
-                                    <select disabled required type="text" class="form-select mb-3" aria-label=".form-select-lg" name="start"  id="start" placeholder="Arrival">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">Andrea Johnson</option>
-                                        <option value="2">Italo Zafron</option>
-                                        <option value="3">Elle McAllister</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <input disabled autocomplete="off" required type="text" class="start form-control" name="end" id="end" placeholder="Departure">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-    `;
-            attention.dropCustom({msg: html, title: "Choose A Therapist and Date"})
-        })
+        `;
+        attention.dropCustom({msg: html, title: "Choose A Therapist and Booking Date"})
+
+    })
+
+
     </script>
 
 {{end}}
