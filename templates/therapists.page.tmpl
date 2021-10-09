@@ -75,7 +75,36 @@
                     </div>
                 </form>
     `;
-            attention.dropCustom({msg: html, title: "Choose A Therapist and Date"})
+            attention.dropCustom({
+                msg: html,
+                title: "Choose A Therapist and Date",
+                willOpen: () => {
+                    const elem = document.querySelector("input[name='booking-date']")
+                    const fp = new flatpickr(elem, {
+                        altInput: true,
+                        altFormat: "F j, Y",
+                        dateFormat: "Y-m-d",
+                        allowInput: true,
+                        minDate: "today"
+                    })
+                },
+                callback: function (result) {
+                    let form = document.getElementById('check-availability-form')
+                    let formData = new FormData(form)
+                    formData.append("csrf_token", "{{.CSRFToken}}")
+
+                    fetch('/search-availability-json', {
+                        method: "post",
+                        body: formData,
+                    })
+                    .then(res => (res.json()))
+                    .then(data => {
+                        console.log(data)
+                        console.log(data.ok)
+                        console.log(data.message)
+                    })
+                }
+            })
         })
 
 

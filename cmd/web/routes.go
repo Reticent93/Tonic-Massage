@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Reticent93/Tonic-Massage/internal/config"
-	"github.com/Reticent93/Tonic-Massage/pkg/handlers"
+	"github.com/Reticent93/Tonic-Massage/internal/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"net/http"
@@ -24,7 +24,7 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/search-availability", handlers.Repo.Availability)
 	mux.Post("/search-availability", handlers.Repo.PostAvailability)
-	mux.Get("/search-availability-json", handlers.Repo.AvailabilityJSON)
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJSON)
 
 	mux.Get("/booking", handlers.Repo.Booking)
 

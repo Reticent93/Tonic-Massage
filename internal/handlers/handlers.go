@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
-	"github.com/Reticent93/Tonic-Massage/pkg/render"
+	"github.com/Reticent93/Tonic-Massage/internal/render"
 	"log"
 	"net/http"
 )

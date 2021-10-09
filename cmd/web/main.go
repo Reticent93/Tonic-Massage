@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
-	"github.com/Reticent93/Tonic-Massage/pkg/handlers"
-	"github.com/Reticent93/Tonic-Massage/pkg/render"
+	"github.com/Reticent93/Tonic-Massage/internal/handlers"
+	"github.com/Reticent93/Tonic-Massage/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
