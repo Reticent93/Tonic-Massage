@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
+	"github.com/Reticent93/Tonic-Massage/internal/forms"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
 	"github.com/Reticent93/Tonic-Massage/internal/render"
 	"log"
@@ -91,5 +92,40 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+
+}
+
+//PostBooking handles the posting of a booking form
+func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+	}
+
+	booking := models.Booking{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+		Date:      r.Form.Get("date"),
+		Time:      r.Form.Get("time"),
+	}
+
+	forms := forms.New(r.PostForm)
+
+	forms.Has("first_name", r)
+
+	if !forms.Valid() {
+		data := make(map[string]interface{})
+		data["booking"] = booking
+
+		render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
+			Form: forms,
+			Data: data,
+		})
+		return
+	}
 }
