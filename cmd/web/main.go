@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
 	"github.com/Reticent93/Tonic-Massage/internal/handlers"
+	"github.com/Reticent93/Tonic-Massage/internal/models"
 	"github.com/Reticent93/Tonic-Massage/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
@@ -18,6 +20,9 @@ var session *scs.SessionManager
 
 func main() {
 
+	gob.Register(models.Booking{})
+
+	//change this to true when in production
 	app.InProduction = false
 
 	session = scs.New()

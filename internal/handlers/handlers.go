@@ -120,19 +120,41 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 		Time:      r.Form.Get("time"),
 	}
 
-	forms := forms.New(r.PostForm)
-	forms.MinLength("first_name", 3, r)
-	forms.IsEmail("email")
+	form := forms.New(r.PostForm)
+	form.MinLength("first_name", 3, r)
+	form.IsEmail("email")
 
-	forms.Required("first_name", "last_name", "email", "phone", "date")
-	if !forms.Valid() {
+	form.Required("first_name", "last_name", "email", "phone", "date")
+	if !form.Valid() {
 		data := make(map[string]interface{})
 		data["booking"] = booking
 
 		render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
-			Form: forms,
+			Form: form,
 			Data: data,
 		})
 		return
 	}
+
+	m.App.Session.Put(r.Context(), "booking", booking)
+	http.Redirect(w, r, "/booking-summary", http.StatusSeeOther)
+
+}
+
+func (m *Repository) BookingSummary(w http.ResponseWriter, r *http.Request) {
+	booking, ok := m.App.Session.Get(r.Context(), "booking").(models.Booking)
+	if !ok {
+		log.Println("Cannot get item from session")
+		m.App.Session.Put(r.Context(), "error", "Cannot get reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "booking")
+	data := make(map[string]interface{})
+	data["booking"] = booking
+
+	render.RenderTemplate(w, r, "booking-summary.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
