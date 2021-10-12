@@ -92,8 +92,13 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
+	var emptyBooking models.Booking
+	data := make(map[string]interface{})
+	data["booking"] = emptyBooking
+
 	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
+		Data: data,
 	})
 
 }
@@ -103,6 +108,7 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	booking := models.Booking{
@@ -115,9 +121,10 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 	}
 
 	forms := forms.New(r.PostForm)
+	forms.MinLength("first_name", 3, r)
+	forms.IsEmail("email")
 
-	forms.Has("first_name", r)
-
+	forms.Required("first_name", "last_name", "email", "phone", "date")
 	if !forms.Valid() {
 		data := make(map[string]interface{})
 		data["booking"] = booking
