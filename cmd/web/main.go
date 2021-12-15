@@ -25,11 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//http.HandleFunc("/", handlers.Repo.Home)
-	//http.HandleFunc("/about", handlers.Repo.About)
-
 	fmt.Println(fmt.Sprintf("Starting app on port %s", port))
-	//_ = http.ListenAndServe(port, nil)
 
 	srv := &http.Server{
 		Addr:    port,
