@@ -39,7 +39,7 @@ func (f *Form) Required(fields ...string) {
 
 //Has checks if form field in post and not empty
 func (f *Form) Has(field string, r *http.Request) bool {
-	x := r.Form.Get(field)
+	x := f.Get(field)
 
 	if x == "" {
 		return false
