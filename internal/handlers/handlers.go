@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
 	"github.com/Reticent93/Tonic-Massage/internal/forms"
+	"github.com/Reticent93/Tonic-Massage/internal/helpers"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
 	"github.com/Reticent93/Tonic-Massage/internal/render"
-	"log"
 	"net/http"
 )
 
@@ -30,17 +30,11 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Hello again."
-
 	//send the data to the template
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
-	})
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Massage(w http.ResponseWriter, r *http.Request) {
@@ -84,7 +78,8 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -107,7 +102,7 @@ func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
 
@@ -144,7 +139,7 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) BookingSummary(w http.ResponseWriter, r *http.Request) {
 	booking, ok := m.App.Session.Get(r.Context(), "booking").(models.Booking)
 	if !ok {
-		log.Println("Cannot get item from session")
+		m.App.ErrorLog.Println("cannot get error from session")
 		m.App.Session.Put(r.Context(), "error", "Cannot get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
