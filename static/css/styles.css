@@ -1,23 +1,6 @@
-/*footer {*/
-/*    color: orange;*/
-/*    background-color: cornflowerblue;*/
-/*    align-items: center;*/
-/*    font-size: 80%;*/
-/*    padding: 1em;*/
-/*    margin-top: 1.5em;*/
-/*}*/
-
-/*.notie-container {*/
-/*    box-shadow: none;*/
-/*}*/
-
-/*.datepicker-dropdown {*/
-/*    z-index: 10000;*/
-/*}*/
-
 .my-footer {
     height: 5em;
-    background-color: #163b65;
+    background-color: #d0d0d0;
     margin-top: 1.5em;
     padding: 1em;
     color: white;
