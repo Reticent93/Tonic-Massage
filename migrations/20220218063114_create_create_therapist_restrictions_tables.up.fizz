@@ -1,0 +1,9 @@
+create_table("therapist_restrictions") {
+  t.Column("id", "integer", {primary: true})
+  t.Column("phone", "string", {"default": ""})
+  t.Column("start_date", "date", {})
+  t.Column("end_date", "date", {})
+  t.Column("therapist_id", "integer", {})
+  t.Column("reservation_id", "integer", {})
+  t.Column("restriction_id", "integer", {})
+}

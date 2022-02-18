@@ -1,0 +1,5 @@
+drop_foreign_key("therapist_restrictions", "therapist_restrictions_restrictions_id_fk", {})
+
+
+drop_foreign_key("therapist_restrictions", "therapist_restrictions_therapists_id_fk", {})
+
