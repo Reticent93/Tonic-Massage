@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-//NOSurf adds CSRF protection to all POST requests
+// NoSurf adds CSRF protection to all POST requests
 func NoSurf(next http.Handler) http.Handler {
 	CsrfHandler := nosurf.New(next)
 
