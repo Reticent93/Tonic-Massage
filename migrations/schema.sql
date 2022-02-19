@@ -302,10 +302,52 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: reservations_email_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX reservations_email_idx ON public.reservations USING btree (email);
+
+
+--
+-- Name: reservations_last_name_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX reservations_last_name_idx ON public.reservations USING btree (last_name);
+
+
+--
 -- Name: schema_migration_version_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USING btree (version);
+
+
+--
+-- Name: therapist_restrictions_reservation_id_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX therapist_restrictions_reservation_id_idx ON public.therapist_restrictions USING btree (reservation_id);
+
+
+--
+-- Name: therapist_restrictions_start_date_end_date_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX therapist_restrictions_start_date_end_date_idx ON public.therapist_restrictions USING btree (start_date, end_date);
+
+
+--
+-- Name: therapist_restrictions_therapist_id_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX therapist_restrictions_therapist_id_idx ON public.therapist_restrictions USING btree (therapist_id);
+
+
+--
+-- Name: users_email_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX users_email_idx ON public.users USING btree (email);
 
 
 --
@@ -314,6 +356,14 @@ CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USIN
 
 ALTER TABLE ONLY public.reservations
     ADD CONSTRAINT reservations_therapists_id_fk FOREIGN KEY (therapist_id) REFERENCES public.therapists(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: therapist_restrictions therapist_restrictions_reservations_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.therapist_restrictions
+    ADD CONSTRAINT therapist_restrictions_reservations_id_fk FOREIGN KEY (reservation_id) REFERENCES public.reservations(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
