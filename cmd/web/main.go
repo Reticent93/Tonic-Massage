@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
+	"github.com/Reticent93/Tonic-Massage/internal/driver"
 	"github.com/Reticent93/Tonic-Massage/internal/handlers"
 	"github.com/Reticent93/Tonic-Massage/internal/helpers"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
@@ -26,10 +27,12 @@ var (
 
 func main() {
 
-	err := run()
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	defer db.SQL.Close()
 
 	fmt.Println(fmt.Sprintf("Starting app on port %s", port))
 
@@ -42,7 +45,7 @@ func main() {
 	log.Fatal(err)
 }
 
-func run() error {
+func run() (*driver.DB, error) {
 	//what I put in the session
 	gob.Register(models.Booking{})
 
@@ -63,19 +66,28 @@ func run() error {
 
 	app.Session = session
 
+	//connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings ")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+
+	log.Println("Connected to database!")
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }

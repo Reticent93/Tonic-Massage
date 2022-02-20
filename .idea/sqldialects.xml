@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/migrations/20220217232144_create_create_user_tables.up.fizz" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/migrations/20220219013653_add_fkand_indices_to_reservation_tables.down.fizz" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>

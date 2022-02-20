@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Reticent93/Tonic-Massage/internal/config"
+	"github.com/Reticent93/Tonic-Massage/internal/driver"
 	"github.com/Reticent93/Tonic-Massage/internal/forms"
 	"github.com/Reticent93/Tonic-Massage/internal/helpers"
 	"github.com/Reticent93/Tonic-Massage/internal/models"
 	"github.com/Reticent93/Tonic-Massage/internal/render"
+	"github.com/Reticent93/Tonic-Massage/internal/repository"
+	"github.com/Reticent93/Tonic-Massage/internal/repository/dbrepo"
 	"net/http"
 )
 
@@ -15,12 +18,14 @@ var Repo *Repository
 
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 //NewRepo create a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
