@@ -4,18 +4,8 @@ import (
 	"time"
 )
 
-//Booking holds booking data
-type Booking struct {
-	FirstName string
-	LastName  string
-	Email     string
-	Phone     string
-	Date      string
-	Time      string
-}
-
-//Users is the users model
-type Users struct {
+//User is the user model
+type User struct {
 	ID          int
 	Firstname   string
 	LastName    string
@@ -26,26 +16,26 @@ type Users struct {
 	UpdatedAt   time.Time
 }
 
-//Therapists is the therapist model
-type Therapists struct {
+//Therapist is the therapist model
+type Therapist struct {
 	ID            int
 	TherapistName string
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
 
-//Restrictions is the restriction model
-type Restrictions struct {
+//Restriction is the restriction model
+type Restriction struct {
 	ID              int
 	RestrictionName string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }
 
-//Reservations is the reservation model
-type Reservations struct {
+//Reservation is the reservation model
+type Reservation struct {
 	ID          int
-	Firstname   string
+	FirstName   string
 	LastName    string
 	Email       string
 	Phone       string
@@ -54,11 +44,11 @@ type Reservations struct {
 	TherapistId int
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	Therapist   Therapists
+	Therapist   Therapist
 }
 
-//RoomRestrictions is a room restriction model
-type RoomRestrictions struct {
+//RoomRestriction is a room restriction model
+type RoomRestriction struct {
 	ID            int
 	StartDate     time.Time
 	EndDate       time.Time
@@ -67,7 +57,7 @@ type RoomRestrictions struct {
 	RestrictionID int
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
-	Therapist     Therapists
-	Reservation   Reservations
-	Restriction   Restrictions
+	Therapist     Therapist
+	Reservation   Reservation
+	Restriction   Restriction
 }

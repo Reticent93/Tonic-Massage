@@ -12,6 +12,8 @@ import (
 	"github.com/Reticent93/Tonic-Massage/internal/repository"
 	"github.com/Reticent93/Tonic-Massage/internal/repository/dbrepo"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 var Repo *Repository
@@ -35,31 +37,31 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	//send the data to the template
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Massage(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "therapists.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "therapists.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Lymphatic(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "lymphatic.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "lymphatic.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Swedish(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "swedish.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "swedish.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) DeepTissue(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "deep-tissue.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "deep-tissue.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "search.avail.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "search.avail.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
@@ -92,11 +94,11 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Booking(w http.ResponseWriter, r *http.Request) {
-	var emptyBooking models.Booking
+	var emptyBooking models.Reservation
 	data := make(map[string]interface{})
 	data["booking"] = emptyBooking
 
-	render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "booking.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -111,13 +113,32 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	booking := models.Booking{
-		FirstName: r.Form.Get("first_name"),
-		LastName:  r.Form.Get("last_name"),
-		Email:     r.Form.Get("email"),
-		Phone:     r.Form.Get("phone"),
-		Date:      r.Form.Get("date"),
-		Time:      r.Form.Get("time"),
+	sd := r.Form.Get("start_date")
+	ed := r.Form.Get("end_date")
+
+	layout := "01-02-2006"
+	startDate, err := time.Parse(layout, sd)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	endDate, err := time.Parse(layout, ed)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	therapistId, err := strconv.Atoi(r.Form.Get("therapist_id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	booking := models.Reservation{
+		FirstName:   r.Form.Get("first_name"),
+		LastName:    r.Form.Get("last_name"),
+		Email:       r.Form.Get("email"),
+		Phone:       r.Form.Get("phone"),
+		StartDate:   startDate,
+		EndDate:     endDate,
+		TherapistId: therapistId,
 	}
 
 	form := forms.New(r.PostForm)
@@ -129,11 +150,16 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
 		data["booking"] = booking
 
-		render.RenderTemplate(w, r, "booking.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "booking.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
 		return
+	}
+
+	err = m.DB.InsertReservation(booking)
+	if err != nil {
+		helpers.ServerError(w, err)
 	}
 
 	m.App.Session.Put(r.Context(), "booking", booking)
@@ -142,7 +168,7 @@ func (m *Repository) PostBooking(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) BookingSummary(w http.ResponseWriter, r *http.Request) {
-	booking, ok := m.App.Session.Get(r.Context(), "booking").(models.Booking)
+	booking, ok := m.App.Session.Get(r.Context(), "booking").(models.Reservation)
 	if !ok {
 		m.App.ErrorLog.Println("cannot get error from session")
 		m.App.Session.Put(r.Context(), "error", "Cannot get reservation from session")
@@ -154,7 +180,7 @@ func (m *Repository) BookingSummary(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["booking"] = booking
 
-	render.RenderTemplate(w, r, "booking-summary.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "booking-summary.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }

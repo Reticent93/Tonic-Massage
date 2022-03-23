@@ -19,16 +19,20 @@
                                         <option>Elle McAllister</option>
                                     </select>
                                 </div>
-                                <div class="col"  data-date="01/25/2020">
-                                    <input required type="text" autocomplete="off" class="flatpicker form-control" name="book-date"
-                                           placeholder="Booking Date">
+                                <div class="col" data-date="01/25/2020">
+                                    <label>
+                                        <input required type="text" autocomplete="off" class="flatpicker form-control"
+                                               name="book-date"
+                                               placeholder="Booking Date">
+                                    </label>
+                                </div>
+                                <div id="calendar">
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <hr>
-
                     <button type="submit" class="btn btn-info">Search Availability</button>
                 </form>
             </div>
@@ -45,7 +49,75 @@
             altFormat: "F j, Y",
             dateFormat: "d-m-Y",
             allowInput: true,
+            minDate: "today",
+
+
         });
     </script>
+
+    <script>
+        // const lem = document.getElementsByClassName('timepicker');
+        // const tp = flatpickr(lem, {
+        //     enableTime: true,
+        //     noCalendar: true,
+        //     timeFormat: "H:i",
+        //     minTime: "07:00",
+        //     minuteIncrement: 30,
+        //     wrap: true
+        // })
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new Calendar(calendarEl, {
+                plugins: ["timeGrid", "interaction"],
+                header: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "timeGridFourDay"
+                },
+                defaultView: "timeGridFourDay",
+                views: {
+                    timeGridFourDay: {
+                        type: "timeGrid",
+                        duration: {days: 4},
+                        buttonText: "4 day"
+                    }
+                },
+                slotLabelFormat: {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    omitZeroMinute: true,
+                    meridiem: "short"
+                },
+                allDaySlot: false,
+                firstDay: 1,
+                minTime: "08:00:00",
+                maxTime: "20:00:00",
+                contentHeight: "auto",
+                slotDuration: "00:20:00",
+                selectable: true,
+                select: function (info) {
+                    //console.log(info);
+                    calendar.addEvent({"title": "Test", start: info.start, end: info.end})
+                    calendar.unselect();
+                },
+                selectOverlap: false,
+                selectAllow: function (selectInfo) {
+                    var stM = moment(selectInfo.start);
+                    var enM = moment(selectInfo.end);
+                    var diff = enM.diff(stM, "minutes");
+                    console.log(diff);
+                    return diff <= 20;
+
+                },
+                events: [
+                    {"title": "Existing event", "start": "2019-08-08 10:00", "end": "2019-08-08 10:20"},
+                    {"title": "Existing event", "start": "2019-08-08 13:20", "end": "2019-08-08 13:40"},
+                ]
+            });
+
+            calendar.render();
+        });
+    </script>
+
 
 {{end}}

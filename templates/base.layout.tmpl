@@ -89,6 +89,7 @@
     <script src="https://unpkg.com/notie"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src='fullcalendar/main.js'></script>
 
 
     {{block "js" .}}
@@ -280,28 +281,6 @@
                 }
             }
 
-            // async function dropCustom(c) {
-            //     const { value: formValues} = await Swal.fire({
-            //         title: title,
-            //         input: 'select',
-            //         inputOptions: {
-            //
-            //             'andrea': 'Andrea Johnson',
-            //             'italo': 'Italo Zafron',
-            //             'elle': 'Elle McAllister'
-            //
-            //         },
-            //         showCancelButton: true,
-            //         inputValidator: (value) => {
-            //             return new Promise((resolve) => {
-            //
-            //                 resolve()
-            //
-            //             })
-            //         }
-            //     })
-            //
-            // }
 
             return {
                 toast: toast,
